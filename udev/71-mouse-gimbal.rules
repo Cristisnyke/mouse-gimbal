@@ -1,0 +1,3 @@
+# mouse-gimbal: let the logged-in user read mouse event nodes (to grab and smooth them).
+# Runs before 73-seat-late.rules, which applies uaccess ACLs.
+SUBSYSTEM=="input", KERNEL=="event*", ENV{ID_INPUT_MOUSE}=="1", TAG+="uaccess"
