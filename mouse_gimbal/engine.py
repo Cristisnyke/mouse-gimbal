@@ -18,6 +18,7 @@ import time
 import evdev
 from evdev import UInput, ecodes as e
 
+from . import kwin
 from .filters import Gimbal
 
 VIRTUAL_NAME = "mouse-gimbal"
@@ -135,6 +136,9 @@ class Engine:
                 continue
             self.devs[dev.fd] = dev
             added += 1
+        if added:  # match the real mouse's KDE speed/accel (else KDE uses defaults)
+            src = sorted(d.path for d in self.devs.values())[0]
+            kwin.copy_async(src, self.ui.device.path)
         return added
 
     def _drop(self, dev):
